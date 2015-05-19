@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
+    defaultConfig {
+        applicationId "sandie.wino"
+        minSdkVersion 11
+        targetSdkVersion 22
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+
+        testApplicationId "sandie.wino.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:22.1.1'
+    compile files('libs/codemodel-2.4.1.jar')
+    compile files('libs/commons-lang-2.4.jar')
+    compile files('libs/jackson-annotations-2.0.0.jar')
+    compile files('libs/jackson-core-2.0.0.jar')
+    compile files('libs/jackson-databind-2.0.0.jar')
+    compile files('libs/javax.annotation-3.0.jar')
+}
