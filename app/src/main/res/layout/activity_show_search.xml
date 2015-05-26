@@ -49,15 +49,7 @@
 		android:layout_margin="5dp" 
 		android:prompt="@string/wine_food"/>
 
-	<ProgressBar
-		android:id="@+id/progressBar_loading"
-		style="@android:style/Widget.ProgressBar.Large"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_above="@+id/button1"
-		android:visibility="invisible"
-		android:layout_centerHorizontal="true"
-		android:layout_centerVertical="true"/>
+
 
 	<LinearLayout
 	    android:layout_width="match_parent"
@@ -67,12 +59,14 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:enabled="false"
-	    android:text="@string/searchBtn" />
+		android:onClick="searchForWine"
+	    android:text="@string/searchBtn"/>
 	<Button
 	    android:id="@+id/resetBtn"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:enabled="true"
+		android:onClick="reset"
 	    android:text="@string/resetBtn" />	    
 	</LinearLayout>
 

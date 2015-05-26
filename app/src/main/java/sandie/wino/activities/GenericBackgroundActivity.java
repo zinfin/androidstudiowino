@@ -1,15 +1,17 @@
 package sandie.wino.activities;
 
-import sandie.wino.R;
-import sandie.wino.fragment.RetainedFragmentManager;
-import sandie.wino.utils.WinoUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import sandie.wino.R;
+import sandie.wino.fragment.RetainedFragmentManager;
+import sandie.wino.utils.WinoUtils;
 
 /**
  * A generic activity that can be customized to perform some type of download operation, 
@@ -51,11 +53,11 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 		super.onCreate(savedInstanceState);
 
 		// Set up layout
-		setContentView(R.layout.activity_show_search);
+		setContentView(R.layout.progress_bar);
 		// Store progress bar
 		mLoadingProgressBar = (ProgressBar) findViewById(R.id.progressBar_loading);
-		// Store textview from progress bar
-		//mTextview = (TextView) findViewById(R.id.textView1);
+		mTextView = (TextView) findViewById(R.id.progressBar_text);
+
 	}
 	/**
 	 * Called after onCreate() or after onRestart().  Re-acquire
@@ -91,6 +93,7 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 		Log.d(mActivityName, "onStop() making progress bar invisible");
 		// Dismiss progress bar
 		mLoadingProgressBar.setVisibility(View.INVISIBLE);
+		mTextView.setVisibility(View.INVISIBLE);
 		
 	}
 	/**
@@ -99,7 +102,7 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 	@Override
 	public void onBackPressed(){
 		//Log
-		Log.d(TAG,"Back button pressed");
+		Log.d(TAG, "Back button pressed");
 		//Find the AsyncTask if it exists, cancel it and set to null
 		GenericAsyncTask asyncTask = mRetainedFragmentManager.get(ASYNC_TASK);
 		if (asyncTask !=null){
@@ -113,9 +116,10 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 		}
 		// Hide progress bar
 		mLoadingProgressBar.setVisibility(View.INVISIBLE);
-		
+		Intent intent = new Intent();
+		intent.putExtra("REASON", "back button pressed");
 		// Handle activity's result
-		WinoUtils.setActivityResult(this, 0, "back button pressed");
+		WinoUtils.setActivityResult(this, 0, intent);
 		
 		// Call super class method
 		super.onBackPressed();
@@ -204,7 +208,6 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 				// Call doExecute() method to perform specific call
 				return onExecute(params[0]);
 			} catch (NullPointerException npe) {
-				// TODO Auto-generated catch block
 				npe.printStackTrace();
 				return null;
 			}
@@ -217,7 +220,7 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 		@Override
 		protected void onPostExecute(ReturnType content){
 			Log.d(TAG, "in onPostExecute");
-			
+			mLoadingProgressBar.setVisibility(View.INVISIBLE);
 			// Update content of fragment
 			mRetainedFragmentManager.put(CONTENT, content);
 			
@@ -225,14 +228,13 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 			@SuppressWarnings("unchecked")
 			GenericBackgroundActivity<ReturnType> activity =
 				(GenericBackgroundActivity<ReturnType>) mRetainedFragmentManager.getActivity();
-			
-			// Make activity exists before proceeding
+			// Make sure activity exists before proceeding
 			if (activity !=null){
 				// Call the onPostExecute method in the Activity
 				if(activity.onPostExecute(content)){
-					activity.fileList();
+					activity.finish();
 					
-					// Set asysnc task to null
+					// Set async task to null
 					mRetainedFragmentManager.put(ASYNC_TASK, null);
 				}else{
 					Log.d(TAG, "*** Activity is null onPostExecute ***");

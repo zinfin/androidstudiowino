@@ -1,24 +1,24 @@
 package sandie.wino.activities;
 
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.ListView;
+
 import java.util.List;
 
 import sandie.wino.R;
 import sandie.wino.WineListAdapter;
 import sandie.wino.WinoApp;
 import sandie.wino.fragment.RunSearchFragment;
-import android.app.FragmentManager;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.ListView;
 
 public class ShowSearchResultsActivity extends LifecycleLoggingActivity implements RunSearchFragment.TaskCallbacks{
 
 		private WinoApp _app;
 		private ProgressDialog progressDialog;
 		private static final String TAG_TASK_FRAGMENT = RunSearchFragment.class.getName();
-		private RunSearchFragment mSearchFragment;
 
-		@Override
+	@Override
 		public void onCreate(Bundle savedInstanceState){
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.result_list);		
@@ -27,7 +27,7 @@ public class ShowSearchResultsActivity extends LifecycleLoggingActivity implemen
 
 			if (_app.getSelectedItems()!=null){
                 FragmentManager fm = getFragmentManager();
-                mSearchFragment = (RunSearchFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+				RunSearchFragment mSearchFragment = (RunSearchFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
                 // If the Fragment is non-null, then it is currently being
                 // retained across a configuration change.
                 if (mSearchFragment == null) {

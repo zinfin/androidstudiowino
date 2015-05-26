@@ -1,27 +1,19 @@
 package sandie.wino.fragment;
 
+import android.app.Activity;
+import android.app.Application;
+import android.app.Fragment;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.http.client.HttpClient;
-
-import sandie.wino.R;
 import sandie.wino.WineConstants;
-import sandie.wino.WineListAdapter;
-import sandie.wino.WineSearchFactory;
 import sandie.wino.WinoApp;
-import sandie.wino.activities.ShowSearchOptionsActivity;
-import sandie.wino.model.List;
-
-import android.app.Activity;
-import android.app.Application;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
-import android.widget.ListView;
 
 /**
  * RunSearchFragment manages the task of searching for wines given
@@ -34,13 +26,12 @@ public class RunSearchFragment extends Fragment {
 	private static final boolean DEBUG = true; 
 	private WinoApp _app;
 	private TaskCallbacks mCallbacks;
-	private SearchForWines mTask;
-	
+
 	/**
 	 * Callback interface through which the fragment can report the task's
 	 * progress and results back to the Activity.
 	 */
-	public static interface TaskCallbacks {
+	public interface TaskCallbacks {
 		void onPreExecute();
 		void onProgressUpdate(int percent);
 		void onCancelled();
@@ -75,7 +66,7 @@ public class RunSearchFragment extends Fragment {
         Log.i(WineConstants.LOG_TAG, "RunSearchFragment: ON CREATE");
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-        mTask = new SearchForWines(_app);
+		SearchForWines mTask = new SearchForWines(_app);
         mTask.execute();
 
 	}
@@ -110,7 +101,7 @@ public class RunSearchFragment extends Fragment {
 		protected java.util.List<sandie.wino.model.List> doInBackground(Object... params) {
             Log.i(WineConstants.LOG_TAG, "SearchForWinesTask: DO IN BACKGROUND");
 
-            java.util.List<sandie.wino.model.List> items = new ArrayList<List>( );
+            java.util.List<sandie.wino.model.List> items = new ArrayList<>();
 			// Get selected items from application
             if ( _app.getSelectedItems()!=null  ){
 			    HashMap<String,Integer> searchMap = (HashMap<String, Integer>) _app.getSelectedItems();
@@ -127,8 +118,8 @@ public class RunSearchFragment extends Fragment {
                 }
                 _resultSize = _app.getResultSize();
                 _offset = _app.getOffset();
-                final HttpClient httpClient = ShowSearchOptionsActivity.getHttpClient();
-                items =  WineSearchFactory.searchByCategories(httpClient, wineIds, _resultSize, _offset);
+              //  final HttpClient httpClient = ShowSearchOptionsActivity.getHttpClient();
+               // items =  WineSearchFactory.searchByCategories(httpClient, wineIds, _resultSize, _offset);
             }
 
             return items;

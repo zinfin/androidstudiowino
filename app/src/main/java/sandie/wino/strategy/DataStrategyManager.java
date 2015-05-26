@@ -1,9 +1,10 @@
 package sandie.wino.strategy;
 
-import sandie.wino.activities.MainActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+
+import sandie.wino.activities.MainActivity;
 
 public class DataStrategyManager {
 	/*
@@ -20,6 +21,7 @@ public class DataStrategyManager {
 		 * to perform various activities
 		 */
 		DOWNLOAD_SEARCH_OPTIONS,
+		SHOW_SEARCH_OPTIONS,
 		PERFORM_SEARCH,
 		GET_DETAIL
 	}
@@ -32,7 +34,7 @@ public class DataStrategyManager {
 	public DataStrategyManager(MainActivity activity) {
 		// Load up the strategies
 		mStrategies[StrategyType.DOWNLOAD_SEARCH_OPTIONS.ordinal()]= new GetCategoryStrategy(activity);
-		
+		mStrategies[StrategyType.SHOW_SEARCH_OPTIONS.ordinal()] = new ShowSearchFilterStrategy(activity);
 	}
 	/**
 	 * Perform strategy associated with strategy type and a uri
@@ -53,13 +55,13 @@ public class DataStrategyManager {
 		mStrategies[strategyType.ordinal()].doRequest();
 	}
 	/**
-	 * Process result specific to strategy
+	 * Process result specific to this strategy
 	 */
 	public void doResult(int requestCode, int resultCode, Intent data){
 		// Determine if result was successful and handle accordingly
 		if (resultCode == Activity.RESULT_OK){
 			// Call the appropriate doResult method for the strategy based on the request code
-			mStrategies[requestCode].doRequest(data);
+			mStrategies[requestCode].doResult(data);
 		}else if (resultCode == Activity.RESULT_CANCELED){
 			mStrategies[requestCode].doError(data);
 		}

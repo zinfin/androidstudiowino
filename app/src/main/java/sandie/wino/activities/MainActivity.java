@@ -1,8 +1,9 @@
 package sandie.wino.activities;
 
-import sandie.wino.strategy.DataStrategyManager;
 import android.content.Intent;
 import android.os.Bundle;
+
+import sandie.wino.strategy.DataStrategyManager;
 
 public class MainActivity extends LifecycleLoggingActivity {
 	/**
@@ -19,7 +20,7 @@ public class MainActivity extends LifecycleLoggingActivity {
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		// Kick off the first activity which load search options
-		doRequest(DataStrategyManager.StrategyType.DOWNLOAD_SEARCH_OPTIONS);
+		doRequest(DataStrategyManager.StrategyType.DOWNLOAD_SEARCH_OPTIONS, null);
 	}
 	
 	/**
@@ -30,11 +31,11 @@ public class MainActivity extends LifecycleLoggingActivity {
 		doResult(requestCode, resultCode, data);
 	}
 	/**
-	 * Launch specific Activty related to this strategy
+	 * Launch specific Activity related to this strategy
 	 * @param strategyType
 	 */
-	public void doRequest(DataStrategyManager.StrategyType strategyType){
-		mDataStrategyManager.doRequest(strategyType);
+	public void doRequest(DataStrategyManager.StrategyType strategyType, Intent data){
+		mDataStrategyManager.doRequest(strategyType, data);
 	}
 	/**
 	 * Handle specific result related to this strategy

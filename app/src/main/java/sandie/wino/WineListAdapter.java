@@ -1,9 +1,5 @@
 package sandie.wino;
 
-import java.util.List;
-
-import sandie.wino.tasks.ImageDownloadTask;
-import sandie.wino.R;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
+import sandie.wino.tasks.ImageDownloadTask;
 
 public class WineListAdapter extends ArrayAdapter<sandie.wino.model.List> {
 	Context context;

@@ -1,7 +1,4 @@
 package sandie.wino.view;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -12,6 +9,10 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * A modified Spinner that doesn't automatically select the first entry in the list.

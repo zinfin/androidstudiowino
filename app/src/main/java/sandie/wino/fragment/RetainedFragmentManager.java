@@ -1,13 +1,13 @@
 package sandie.wino.fragment;
 
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 /**
  * Retains and manages state information between runtime configuration
@@ -41,7 +41,7 @@ public class RetainedFragmentManager {
                                    String retainedFragmentTag) {
         // Store a WeakReference to the Activity.
         mFragmentManager =
-            new WeakReference<FragmentManager>(fragmentManager);
+                new WeakReference<>(fragmentManager);
 
         // Store the tag used to identify the RetainedFragment.
         mRetainedFragmentTag = retainedFragmentTag;
@@ -50,7 +50,7 @@ public class RetainedFragmentManager {
     /**
      * Initializes the RetainedFragment the first time it's called.
      *
-     * @returns true if it's first time the method's been called, else
+     * @return true if it's first time the method's been called, else
      *          false.
      */
     public boolean firstTimeIn() {
@@ -130,7 +130,7 @@ public class RetainedFragmentManager {
          * Maps keys to objects.
          */
         private HashMap<String, Object> mData =
-            new HashMap<String, Object>();
+                new HashMap<>();
 
         /**
          * Hook method called when a new instance of Fragment is

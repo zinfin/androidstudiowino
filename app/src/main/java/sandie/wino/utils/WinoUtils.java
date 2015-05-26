@@ -1,22 +1,18 @@
 package sandie.wino.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import sandie.wino.json.JsonWineParser;
-import sandie.wino.model.Category;
 
 public class WinoUtils {
 	
@@ -46,30 +42,30 @@ public class WinoUtils {
     * @param resultCode
     *          The result of the Activity, i.e., RESULT_CANCELED or
     *          RESULT_OK. 
-    * @param failureReason
-    *          String to add to add as an extra to the Intent passed
-    *          back to the originating Activity if the result of the
-    *          Activity is RESULT_CANCELED. 
+    * @param data
+    *          An intent containing data and extras of interest.
     */
    public static void setActivityResult(Activity activity,
                                         int resultCode,
-                                        String failureReason) {
-       if (resultCode == Activity.RESULT_CANCELED)
-           // Indicate why the operation on the content was
-           // unsuccessful or was cancelled.
-           activity.setResult(Activity.RESULT_CANCELED,
-                new Intent("").putExtra("reason",
-                                        failureReason));
-       else 
-           // Everything is ok.
-           activity.setResult(Activity.RESULT_OK);
+                                        Intent data) {
+       if (resultCode == Activity.RESULT_CANCELED) {
+		   // Indicate why the operation on the content was
+		   // unsuccessful or was cancelled.
+           String failReason = data.getStringExtra("REASON");
+		   activity.setResult(Activity.RESULT_CANCELED,
+				   new Intent("").putExtra("reason",
+						   failReason));
+	   }else {
+		   // Everything is ok.
+		   activity.setResult(Activity.RESULT_OK, data);
+	   }
    }
    /**
-    * Return an InputStream from a GET request given a valid url.
-    * @param url
-    * @return InputStream
+    * Return an JSON String from a GET request given a valid url.
+    * @param url JSON endpoint
+    * @return String
     */
-   public static List<Category> getJSONSTream (String url) {
+   public static String getJSONStream (String url) {
 	   HttpURLConnection urlConnection = null;
 	   try{
 		   URL u = new URL(url);
@@ -83,20 +79,11 @@ public class WinoUtils {
 		   int status = urlConnection.getResponseCode();
 		   
 		   switch (status){
-		   		case 200:
+			   case 200:
 		   		case 201:
-//		   			BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//		   			StringBuilder sb = new StringBuilder();
-//		   			String line;
-//		   			while (br.readLine()!=null){
-//		   				line = br.readLine();
-//		   				sb.append(line+"\n");
-//		   			}
-//		   			br.close();
 		   			InputStream stream =  urlConnection.getInputStream();
 					JsonWineParser jsonParser = new JsonWineParser();
-					jsonParser.setJsonStream(stream);
-					return jsonParser.parseCategories();
+					return jsonParser.getJSONString(stream);
 		
 		   }
 		   

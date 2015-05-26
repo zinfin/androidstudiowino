@@ -1,10 +1,11 @@
 package sandie.wino.strategy;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import java.lang.ref.WeakReference;
 
 import sandie.wino.activities.MainActivity;
-import android.content.Intent;
-import android.net.Uri;
 
 public abstract class WineStrategy {
 

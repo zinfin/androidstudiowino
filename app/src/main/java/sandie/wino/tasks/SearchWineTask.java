@@ -1,25 +1,20 @@
 package sandie.wino.tasks;
 
+import android.app.Application;
+import android.os.AsyncTask;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.http.client.HttpClient;
-
-import sandie.wino.WineSearchFactory;
 import sandie.wino.WinoApp;
-import sandie.wino.activities.ShowSearchOptionsActivity;
 import sandie.wino.interfaces.OnTaskCompleted;
 import sandie.wino.model.List;
-import android.app.Application;
-import android.os.AsyncTask;
 public class SearchWineTask extends AsyncTask<Object, Void, java.util.List<sandie.wino.model.List>> {
 	
 	private WinoApp _app;
 	private OnTaskCompleted _taskCompleted;
-	private int _resultSize;
-	private int _offset;
-	
+
 	public SearchWineTask(Application application, OnTaskCompleted activity){
 		_app = (WinoApp) application;
 		_taskCompleted = activity;
@@ -39,10 +34,11 @@ public class SearchWineTask extends AsyncTask<Object, Void, java.util.List<sandi
 			wineIds[z] = iter.next();
 			z = z + 1;
 		}
-		_resultSize = _app.getResultSize();
-		_offset = _app.getOffset();
-		final HttpClient httpClient = ShowSearchOptionsActivity.getHttpClient();
-		return WineSearchFactory.searchByCategories(httpClient, wineIds, _resultSize, _offset);
+		int _resultSize = _app.getResultSize();
+		int _offset = _app.getOffset();
+		/*final HttpClient httpClient = ShowSearchOptionsActivity.getHttpClient();
+		return WineSearchFactory.searchByCategories(httpClient, wineIds, _resultSize, _offset);*/
+		return null;
 	}
 	@Override
 	protected void onPostExecute(java.util.List<List> results){

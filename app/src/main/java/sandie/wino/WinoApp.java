@@ -1,5 +1,14 @@
 package sandie.wino;
 
+import android.app.Application;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.State;
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,21 +20,13 @@ import java.util.Map;
 
 import sandie.wino.json.JsonWineParser;
 import sandie.wino.model.Category;
-import android.app.Application;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.NetworkInfo.State;
-import android.util.Log;
 
 public class WinoApp extends Application {
 	//Include data members shared by application
 	private ConnectivityManager cMgr;
 	private JsonWineParser jsonParser;
-	private List<Category> categories = new ArrayList<Category>();
-	private List<sandie.wino.model.List> results = new ArrayList<sandie.wino.model.List>();
+	private List<Category> categories = new ArrayList<>();
+	private List<sandie.wino.model.List> results = new ArrayList<>();
 	private Map<String,Integer> selectedItems;
 	private int resultSize = 10;
 	private int offset = 5;
@@ -52,7 +53,7 @@ public class WinoApp extends Application {
 		super.onCreate();
 		this.cMgr = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 		this.jsonParser = new JsonWineParser();
-	    this.imageCache = new HashMap<Double, Bitmap>();
+	    this.imageCache = new HashMap<>();
 	}
 	@Override
 	public void onTerminate() {
@@ -61,10 +62,7 @@ public class WinoApp extends Application {
 	}
 	public boolean connectionPresent() {
 		NetworkInfo netInfo = cMgr.getActiveNetworkInfo();
-		if ((netInfo != null) && (netInfo.getState() != null)) {
-			return netInfo.getState().equals(State.CONNECTED);
-		} 
-		return false;
+		return (netInfo != null) && netInfo.getState() != null && netInfo.getState().equals(State.CONNECTED);
 	}
 
 	public List<sandie.wino.model.List> getResults() {

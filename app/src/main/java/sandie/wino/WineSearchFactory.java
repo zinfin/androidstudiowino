@@ -1,14 +1,13 @@
 package sandie.wino;
 
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 
 import sandie.wino.json.JsonWineParser;
 
@@ -16,8 +15,8 @@ public class WineSearchFactory {
 	public static  List<sandie.wino.model.List> searchByCategories(HttpClient httpClient, Double [] ids, int resultSize, int offset){
 		// Convert double array to concatenate category ids
 		String categoryIds = "";
-		for (int i=0; i<ids.length; i++){
-			categoryIds = categoryIds + ids[i] + "+";
+		for (Double id : ids) {
+			categoryIds = categoryIds + id + "+";
 		}
 		categoryIds = categoryIds + "490";
 		String PARAM = "catalog?filter=categories("+categoryIds+")&offset="+offset+"&size="+resultSize+"&apikey=";
@@ -29,8 +28,8 @@ public class WineSearchFactory {
 	public static  List<sandie.wino.model.List> searchByCategories(HttpClient httpClient, int [] ids, int resultSize, int offset){
 		// Convert int array to concatenate category ids
 		String categoryIds = "";
-		for (int i=0; i<ids.length; i++){
-			categoryIds = categoryIds + ids[i] + "+";
+		for (int id : ids) {
+			categoryIds = categoryIds + id + "+";
 		}
 		categoryIds = categoryIds + "490";
 		String PARAM = "catalog?filter=categories("+categoryIds+")&offset="+offset+"&size="+resultSize+"&apikey=";
@@ -48,7 +47,7 @@ public class WineSearchFactory {
 	}
 	private static List<sandie.wino.model.List> doSearch(HttpClient httpClient, String searchURL, int resultSize){
 		HttpGet httpget = new HttpGet(searchURL);
-		List<sandie.wino.model.List> productList = new ArrayList<sandie.wino.model.List>();
+		List<sandie.wino.model.List> productList = new ArrayList<>();
 		try{
 			HttpResponse response = httpClient.execute(httpget);
 			InputStream data = response.getEntity().getContent();

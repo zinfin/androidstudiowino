@@ -1,18 +1,14 @@
 package sandie.wino.activities;
 
-import java.io.InputStream;
-import java.util.List;
-
-import sandie.wino.R;
-import sandie.wino.json.JsonWineParser;
-import sandie.wino.model.Category;
-import sandie.wino.utils.WinoUtils;
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-public class GetSearchOptionsActivity extends GenericBackgroundActivity<List<Category>> {
+import sandie.wino.utils.WinoUtils;
+
+public class GetSearchOptionsActivity extends GenericBackgroundActivity<String> {
 
 	/**
 	 * String name of the Intent Action starting this activity
@@ -32,9 +28,9 @@ public class GetSearchOptionsActivity extends GenericBackgroundActivity<List<Cat
 	 *  Use an AsyncTask to get content from given URL and parse resulting JSON into list of category items
 	 */
 	@Override
-	protected List<Category> onExecute(Uri url) {
+	protected String onExecute(Uri url) {
 		Log.d(TAG, "getting data from :" + url.toString());
-		return WinoUtils.getJSONSTream(url.toString());
+		return WinoUtils.getJSONStream(url.toString());
 	}
 
 	/**
@@ -42,13 +38,16 @@ public class GetSearchOptionsActivity extends GenericBackgroundActivity<List<Cat
 	 * This runs on the UI thread.
 	 */
 	@Override
-	protected boolean onPostExecute(List<Category> categories){
+	protected boolean onPostExecute(String jsonCategoryString){
 		int resultCode = Activity.RESULT_CANCELED;
+		Intent intent = new Intent();
 		String failureReason = "Problem getting JSON data";
-		if (categories !=null){
+		if (jsonCategoryString !=null){
 			resultCode = Activity.RESULT_OK;
+			intent.putExtra("CATEGORIES", jsonCategoryString);
 		}
-		WinoUtils.setActivityResult(this, resultCode, failureReason);
+		WinoUtils.setActivityResult(this, resultCode, intent);
+		finish();
 		return true;
 		
 	}

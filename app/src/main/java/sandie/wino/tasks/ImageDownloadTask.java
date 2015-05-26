@@ -1,10 +1,11 @@
 package sandie.wino.tasks;
 
-import sandie.wino.WinoApp;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
+import sandie.wino.WinoApp;
 
 public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 	
@@ -17,8 +18,7 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 	}
 	@Override
 	protected Bitmap doInBackground(String... params) {
-		Bitmap bitmap = _app.retrieveBitmap(params[0]);
-        return bitmap;
+		return _app.retrieveBitmap(params[0]);
 	}
 	@Override 
 	protected void onPostExecute(Bitmap bitmap){
