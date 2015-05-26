@@ -22,7 +22,7 @@ import sandie.wino.model.Category;
 import sandie.wino.model.Products;
 import sandie.wino.model.WineApiJsonParser;
 
-public class JsonWineParser implements WineApiJsonParser {
+public class JsonWineParser  {
 
 	private InputStream jsonStream;
 	public JsonWineParser(){
@@ -75,7 +75,7 @@ public class JsonWineParser implements WineApiJsonParser {
 		}
         return sb.toString();
 	}
-	@Override
+
 	public ArrayList<Category> parseCategories() {
 		List<Category> categories = new ArrayList<>();
 		String line = getJSONString(jsonStream);
@@ -106,10 +106,9 @@ public class JsonWineParser implements WineApiJsonParser {
 		}
 		return categories;
 	}
-	@Override
-	public ArrayList<sandie.wino.model.List> parseProducts() {
+
+	public static ArrayList<sandie.wino.model.List> parseProducts(String line) {
 		Products product = new Products();
-		String line = getJSONString(jsonStream);
         JSONObject jo;
 		try {
 			jo = new JSONObject(line);

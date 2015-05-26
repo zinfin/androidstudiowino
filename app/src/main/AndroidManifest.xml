@@ -22,13 +22,15 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
         </activity>
-        <activity android:name="sandie.wino.activities.GetSearchOptionsActivity">
+        <activity android:name=".activities.GetSearchOptionsActivity">
             <intent-filter>
-                <action android:name="sandie.wino.activities.GetSearchOptionsActivity"/>
+                <action android:name=".activities.GetSearchOptionsActivity"/>
             </intent-filter>
         </activity>
 
-        <activity android:name="sandie.wino.activities.ShowSearchOptionsActivity"/>
+        <activity android:name=".activities.ShowSearchOptionsActivity"/>
+        <activity android:name=".activities.DoSearchActivity"/>
+        <activity android:name=".activities.ShowSearchResultsActivity"/>
     </application>
 
 </manifest>

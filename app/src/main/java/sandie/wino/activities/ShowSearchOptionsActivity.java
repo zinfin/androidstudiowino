@@ -1,6 +1,8 @@
 package sandie.wino.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 import sandie.wino.R;
+import sandie.wino.WineSearchFactory;
+import sandie.wino.WinoApp;
 import sandie.wino.json.JsonWineParser;
 import sandie.wino.model.Category;
 import sandie.wino.model.Refinement;
@@ -28,7 +32,7 @@ public class ShowSearchOptionsActivity extends LifecycleLoggingActivity{
 	private Button searchBtn ;
 	private List<Category> categories;
 	private Map<String,Integer> selectedItems;
-	
+	private WinoApp _app;
 
 
    private final String TAG = getClass().getSimpleName();
@@ -38,7 +42,7 @@ public class ShowSearchOptionsActivity extends LifecycleLoggingActivity{
 
 		super.onCreate(savedInstanceState);
 		// Start by showing the search options
-
+		_app = (WinoApp) getApplication();
 		setContentView(R.layout.activity_show_search);
 		searchBtn = (Button)findViewById(R.id.searchWineBtn);
 		if (this.getIntent() != null) {
@@ -50,27 +54,39 @@ public class ShowSearchOptionsActivity extends LifecycleLoggingActivity{
 		}
 	}
 
+	/**
+	 * Resets the filters
+	 * @param view - The reset button
+	 */
 	public void reset(View view){
 		searchBtn.setEnabled(false);
 		setUpDropdowns();
 		selectedItems = null;
 	}
 
-
+	/**
+	 * Build up the search URL based on the selected filters, then
+	 * send back to the MainActivity where result is handled
+	 * by DoSearchStrategy.
+	 * @param view - The search button
+	 */
 	public void searchForWine(View view){
 		if (selectedItems !=null){
-			// Clear any results
-			//  app.clearResultList();
-			// Save the items to the app
-			//app.setSelectedItems(selectedItems);
 
-			Intent searchResults = new Intent(ShowSearchOptionsActivity.this, ShowSearchResultsActivity.class);
-			startActivity(searchResults);
+			int _resultSize = _app.getResultSize();
+			int _offset = _app.getOffset();
+			// Convert selected items to array of integers
+			int[]  searchIds = WineSearchFactory.extractSearchCategoryIds(selectedItems);
+			String searchUrl = WineSearchFactory.generateSearchURL(searchIds, _resultSize, _offset);
+			Intent intent = new Intent();
+			intent.setData(Uri.parse(searchUrl));
+			WinoUtils.setActivityResult(this, Activity.RESULT_OK, intent);
+			finish();
 		}
 	}
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
 	}
 

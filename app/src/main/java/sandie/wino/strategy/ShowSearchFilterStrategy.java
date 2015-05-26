@@ -40,7 +40,8 @@ public class ShowSearchFilterStrategy extends WineStrategy {
 	}
 	@Override
 	public void doResult(Intent data) {
-		// TODO Auto-generated method stub
+		mActivity.get().doRequest(DataStrategyManager.StrategyType.DO_SEARCH, data);
+
 
 	}
 

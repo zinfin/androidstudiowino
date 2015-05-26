@@ -54,7 +54,7 @@ public abstract class GenericBackgroundActivity<ReturnType> extends
 
 		// Set up layout
 		setContentView(R.layout.progress_bar);
-		// Store progress bar
+		// Get the progress bar and text
 		mLoadingProgressBar = (ProgressBar) findViewById(R.id.progressBar_loading);
 		mTextView = (TextView) findViewById(R.id.progressBar_text);
 

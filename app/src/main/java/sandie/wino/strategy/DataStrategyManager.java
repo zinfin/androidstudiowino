@@ -22,7 +22,8 @@ public class DataStrategyManager {
 		 */
 		DOWNLOAD_SEARCH_OPTIONS,
 		SHOW_SEARCH_OPTIONS,
-		PERFORM_SEARCH,
+		DO_SEARCH,
+		SHOW_SEARCH_RESULTS,
 		GET_DETAIL
 	}
 	
@@ -35,6 +36,8 @@ public class DataStrategyManager {
 		// Load up the strategies
 		mStrategies[StrategyType.DOWNLOAD_SEARCH_OPTIONS.ordinal()]= new GetCategoryStrategy(activity);
 		mStrategies[StrategyType.SHOW_SEARCH_OPTIONS.ordinal()] = new ShowSearchFilterStrategy(activity);
+		mStrategies[StrategyType.DO_SEARCH.ordinal()] = new DoSearchStrategy(activity);
+		mStrategies[StrategyType.SHOW_SEARCH_RESULTS.ordinal()] = new ShowSearchResultStrategy(activity);
 	}
 	/**
 	 * Perform strategy associated with strategy type and a uri

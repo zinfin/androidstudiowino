@@ -7,10 +7,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import sandie.wino.WineSearchFactory;
 import sandie.wino.WinoApp;
 import sandie.wino.interfaces.OnTaskCompleted;
 import sandie.wino.model.List;
-public class SearchWineTask extends AsyncTask<Object, Void, java.util.List<sandie.wino.model.List>> {
+import sandie.wino.utils.WinoUtils;
+
+public class SearchWineTask extends AsyncTask<Object, Void, String> {
 	
 	private WinoApp _app;
 	private OnTaskCompleted _taskCompleted;
@@ -22,27 +25,20 @@ public class SearchWineTask extends AsyncTask<Object, Void, java.util.List<sandi
 	}
 	
 	@Override
-	protected java.util.List<List> doInBackground(Object... params) {
+	protected String doInBackground(Object... params) {
 		// Get selected items from application
 		HashMap<String,Integer> searchMap = (HashMap<String, Integer>) _app.getSelectedItems();
-		// Pull out the values
-		Collection<Integer> ids =searchMap.values();
-		Iterator<Integer> iter = ids.iterator();
-		int [] wineIds = new int[ids.size()];
-		int z=0;
-		while (iter.hasNext()){
-			wineIds[z] = iter.next();
-			z = z + 1;
-		}
+
 		int _resultSize = _app.getResultSize();
 		int _offset = _app.getOffset();
-		/*final HttpClient httpClient = ShowSearchOptionsActivity.getHttpClient();
-		return WineSearchFactory.searchByCategories(httpClient, wineIds, _resultSize, _offset);*/
-		return null;
+
+		int[]  searchIds = WineSearchFactory.extractSearchCategoryIds(searchMap);
+		String searchUrl = WineSearchFactory.generateSearchURL(searchIds,_resultSize, _offset);
+		return WinoUtils.getJSONStream(searchUrl);
 	}
 	@Override
-	protected void onPostExecute(java.util.List<List> results){
-		_app.setResults(results);
+	protected void onPostExecute(String results){
+		//_app.setResults(results);
 		_taskCompleted.callback();		
 	}
 }

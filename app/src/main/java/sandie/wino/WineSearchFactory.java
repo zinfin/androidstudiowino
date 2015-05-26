@@ -1,18 +1,21 @@
 package sandie.wino;
 
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import sandie.wino.json.JsonWineParser;
+import sandie.wino.utils.WinoUtils;
 
 public class WineSearchFactory {
-	public static  List<sandie.wino.model.List> searchByCategories(HttpClient httpClient, Double [] ids, int resultSize, int offset){
+	public static  List<sandie.wino.model.List> searchByCategories( Double [] ids, int resultSize, int offset){
 		// Convert double array to concatenate category ids
 		String categoryIds = "";
 		for (Double id : ids) {
@@ -22,10 +25,10 @@ public class WineSearchFactory {
 		String PARAM = "catalog?filter=categories("+categoryIds+")&offset="+offset+"&size="+resultSize+"&apikey=";
 		String searchURL = WineConstants.ENDPOINT+PARAM+WineConstants.API_KEY;
 		System.out.println(searchURL);
-		return doSearch(httpClient, searchURL,resultSize);
+		return doSearch(searchURL,resultSize);
 		
 	}
-	public static  List<sandie.wino.model.List> searchByCategories(HttpClient httpClient, int [] ids, int resultSize, int offset){
+	public static  String generateSearchURL( int [] ids, int resultSize, int offset){
 		// Convert int array to concatenate category ids
 		String categoryIds = "";
 		for (int id : ids) {
@@ -33,30 +36,39 @@ public class WineSearchFactory {
 		}
 		categoryIds = categoryIds + "490";
 		String PARAM = "catalog?filter=categories("+categoryIds+")&offset="+offset+"&size="+resultSize+"&apikey=";
-		String searchURL = WineConstants.ENDPOINT+PARAM+WineConstants.API_KEY;
-		System.out.println(searchURL);
-		return doSearch(httpClient, searchURL,resultSize);
+		return WineConstants.ENDPOINT+PARAM+WineConstants.API_KEY;
+
 		
 	}
-	public static List<sandie.wino.model.List> searchByCategory(HttpClient httpClient,int id, int resultSize, int offset){
+	public static List<sandie.wino.model.List> searchByCategory(int id, int resultSize, int offset){
 		String PARAM = "catalog?filter=categories(490+"+id+")&offset="+offset+"&size="+resultSize+"&apikey=";
 		String searchURL = WineConstants.ENDPOINT+PARAM+WineConstants.API_KEY;
 		System.out.println(searchURL);
-		return doSearch(httpClient, searchURL,resultSize);
+		return doSearch(searchURL,resultSize);
 		
 	}
-	private static List<sandie.wino.model.List> doSearch(HttpClient httpClient, String searchURL, int resultSize){
-		HttpGet httpget = new HttpGet(searchURL);
+	private static List<sandie.wino.model.List> doSearch( String searchURL, int resultSize){
+
 		List<sandie.wino.model.List> productList = new ArrayList<>();
 		try{
-			HttpResponse response = httpClient.execute(httpget);
-			InputStream data = response.getEntity().getContent();
+			String jsonString = WinoUtils.getJSONStream(searchURL);
 			JsonWineParser jsonParser = new JsonWineParser();
-			jsonParser.setJsonStream(data);
-			productList = jsonParser.parseProducts();
+			productList = jsonParser.parseProducts(jsonString);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		return productList;
+	}
+	public static int[] extractSearchCategoryIds(Map<String,Integer> searchMap){
+		// Pull out the values
+		Collection<Integer> ids =searchMap.values();
+		Iterator<Integer> iter = ids.iterator();
+		int [] wineIds = new int[ids.size()];
+		int z=0;
+		while (iter.hasNext()){
+			wineIds[z] = iter.next();
+			z = z + 1;
+		}
+		return wineIds;
 	}
 }
