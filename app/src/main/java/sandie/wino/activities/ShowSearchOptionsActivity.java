@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -53,7 +54,13 @@ public class ShowSearchOptionsActivity extends LifecycleLoggingActivity{
 			}
 		}
 	}
-
+	/* Create the option menu with the camera icon */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
 	/**
 	 * Resets the filters
 	 * @param view - The reset button

@@ -16,4 +16,5 @@
 	<string name="wine_food">Food Type</string>
 	<string name ="searchBtn">Search</string>
 	<string name ="resetBtn">Reset</string>
+	<string name="searchStr">Search</string>
 </resources>

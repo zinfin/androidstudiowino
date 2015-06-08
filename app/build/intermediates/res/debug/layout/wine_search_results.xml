@@ -12,4 +12,4 @@
 		android:layout_height="wrap_content" 
 		android:layout_margin="5dp" />
 </RelativeLayout>
-<!-- From: file:/home/sandie/StudioProjects/Wino/app/src/main/res/layout/wine_search_results.xml -->
+<!-- From: file:/home/sandie/StudioProjects/AndroidStudioWino/app/src/main/res/layout/wine_search_results.xml -->

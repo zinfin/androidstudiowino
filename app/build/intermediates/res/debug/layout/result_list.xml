@@ -4,4 +4,4 @@
 	android:layout_height="fill_parent">
 	<ListView android:id="@+id/wine_list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_weight="1" />
-</LinearLayout><!-- From: file:/home/sandie/StudioProjects/Wino/app/src/main/res/layout/result_list.xml -->
+</LinearLayout><!-- From: file:/home/sandie/StudioProjects/AndroidStudioWino/app/src/main/res/layout/result_list.xml -->
