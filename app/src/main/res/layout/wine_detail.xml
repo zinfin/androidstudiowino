@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/lblWine"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+                android:layout_height="match_parent"
+                android:paddingTop="30dp">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/txtWineName"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentRight="false"
         android:layout_alignParentEnd="true"
-        android:layout_toLeftOf="@+id/textView"/>
+        android:layout_alignParentLeft="true"
+        android:hint="@string/lblWine"
+        android:padding="5dp"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerVintage"
+        android:layout_below="@+id/txtWineName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:prompt="@string/lblVintage"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerVarietal"
+        android:layout_below="@+id/spinnerVintage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:prompt="@string/lblVarietal"
+        android:focusable="true"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/spinnerVarietal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="52dp"/>
+
 </RelativeLayout>
