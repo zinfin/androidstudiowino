@@ -17,4 +17,13 @@
 	<string name ="searchBtn">Search</string>
 	<string name ="resetBtn">Reset</string>
 	<string name="searchStr">Search</string>
+	<string name="lblWine">Wine name</string>
+	<string name="lblVarietal">Varietal</string>
+	<string name="lblVintage">Vintage</string>
+	<string name="lblRating">Rating</string>
+	<string name="addWine">Add Wine</string>
+	<string name="addList">Add List</string>
+	<string name="deleteList">Delete List</string>
+	<string name="shareList">Share List</string>
+	<string name="sortList">Sort List</string>
 </resources>
