@@ -15,6 +15,7 @@
 	<string name="wine_appellation">Appellation</string>
 	<string name="wine_food">Food Type</string>
 	<string name ="searchBtn">Search</string>
+	<string name="capture">Capture</string>
 	<string name ="resetBtn">Reset</string>
 	<string name="searchStr">Search</string>
 	<string name="lblWine">Wine name</string>
